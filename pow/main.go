@@ -18,7 +18,6 @@ func myPow(x float64, n int) float64 {
 
 func myPowIterate(x float64, n int) float64 {
 	// if n < 0 {
-
 	// }
 	return 0.0
 }
