@@ -2,10 +2,14 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 func solveNQueens(n int) [][]string {
 	result := [][]string{}
+	for _, temp := range notAdjust(n) {
+		result = append(result, displayQueens(temp))
+	}
 	return result
 }
 
@@ -26,17 +30,21 @@ func genNums(candidate []int, temp []int, result *[][]int) {
 		*result = append(*result, temp)
 		return
 	}
-	for i := 0; i < len(candidate); i++ {
-		tt := make([]int, len(temp))
-		tempCandiates := make([]int, len(candidate))
-		copy(tempCandiates, candidate)
-		copy(tt, temp)
-		if len(tt) == 0 || abs(candidate[i]-tt[len(tt)-1]) > 1 {
-			tt = append(tt, candidate[i])
-			tempCandiates[i], tempCandiates[0] = tempCandiates[0], tempCandiates[i]
-			genNums(tempCandiates[1:], tt, result)
-		} else {
+	for id, num := range candidate {
+		flag := false
+		for i, t := range temp {
+			if abs(i-len(temp)) == abs(t-num) {
+				flag = true
+				break
+			}
+		}
+		if flag {
 			continue
+		}
+		if len(temp) == 0 || abs(temp[len(temp)-1]-num) > 1 {
+			ct := append([]int{}, candidate...)
+			tt := append([]int{}, temp...)
+			genNums(append(ct[:id], ct[id+1:]...), append(tt, num), result)
 		}
 	}
 }
@@ -51,10 +59,21 @@ func abs(num int) int {
 // displayQueens 对单个棋盘（不连续数列）合成字符串数组输出
 func displayQueens(nums []int) []string {
 	result := []string{}
+	for _, num := range nums {
+		temp := strings.Builder{}
+		for i := 0; i < len(nums); i++ {
+			if i == num {
+				temp.WriteByte('Q')
+			} else {
+				temp.WriteByte('.')
+			}
+		}
+		result = append(result, temp.String())
+	}
 	return result
 }
 
 func main() {
-	num := 4
+	num := 5
 	fmt.Println(notAdjust(num))
 }
