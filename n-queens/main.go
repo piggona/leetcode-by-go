@@ -74,6 +74,6 @@ func displayQueens(nums []int) []string {
 }
 
 func main() {
-	num := 5
-	fmt.Println(notAdjust(num))
+	num := 6
+	fmt.Println(len(notAdjust(num)))
 }
