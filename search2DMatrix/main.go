@@ -1,3 +1,5 @@
+package main
+
 func searchMatrix(matrix [][]int, target int) bool {
 	if len(matrix) == 0 {
 		return false
@@ -54,4 +56,7 @@ func binarySearch(arr []int, target int) bool {
 		}
 	}
 	return false
+}
+func main() {
+	return
 }
