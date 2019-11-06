@@ -6,35 +6,33 @@ import (
 )
 
 func minWindow(s string, t string) string {
-	// lt := len(t)
-	// subMap := make(map[byte]int)
-	// right := 0
-	// left := 0
-	// cleft := 0
-	// count := 0
-	// for i := 0; i < lt; i++ {
-	// 	subMap[t[i]] = -1
-	// }
-	// for i := 0; i < len(s); i++ {
-	// 	if subMap[s[i]] == -1 {
-	// 		subMap[s[i]] = i
-	// 		count++
-	// 		if count == 1 {
-	// 			left = i
-	// 		}
-	// 		if count == lt {
-	// 			right = i
-	// 		}
-	// 	} else if subMap[s[i]] != 0 {
-	// 		if count < lt {
-	// 			subMap[s[i]] = i
-	// 		} else {
-	// 			subMap[s[i]] = i
+	need := make(map[byte]int, len(t))
+	have := make(map[byte]int, len(t))
+	left := 0
+	res := ""
+	cnt := 0
+	minLen := math.MaxInt32
 
-	// 		}
-	// 	}
-	// }
-	return ""
+	for i := 0; i < len(t); i++ {
+		need[t[i]]++
+	}
+	for i := 0; i < len(s); i++ {
+		if have[s[i]] < need[s[i]] {
+			cnt++
+		}
+		have[s[i]]++
+		for left <= i && have[s[left]] > need[s[left]] {
+			have[s[left]]--
+			left++
+		}
+
+		length := i - left + 1
+		if cnt == len(t) && minLen > length {
+			minLen = length
+			res = s[left : i+1]
+		}
+	}
+	return res
 }
 
 // func minWindow(s string, t string) string {
