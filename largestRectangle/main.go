@@ -92,13 +92,13 @@ func largestRectangleAreaStack(height []int) int {
 		} else {
 			temp := stack[len(stack)-1]
 			stack = stack[:len(stack)-1]
-			value := 0
+			var val int
 			if len(stack) == 0 {
-				value = i
+				val = height[temp] * i
 			} else {
-				value = i - stack[len(stack)-1] - 1
+				val = height[temp] * (i - stack[len(stack)-1] - 1)
 			}
-			max = getMax(max, height[temp]*value)
+			max = getMax(max, val)
 		}
 	}
 	return max
