@@ -80,7 +80,31 @@ func getMin(height []int, left, right int) (int, int) {
 	return min, pos
 }
 
+func largestRectangleAreaStack(height []int) int {
+	height = append(height, 0)
+	stack := []int{}
+	i := 0
+	max := 0
+	for i < len(height) {
+		if len(stack) == 0 || height[i] > height[stack[len(stack)-1]] {
+			stack = append(stack, i)
+			i++
+		} else {
+			temp := stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+			value := 0
+			if len(stack) == 0 {
+				value = i
+			} else {
+				value = i - stack[len(stack)-1] - 1
+			}
+			max = getMax(max, height[temp]*value)
+		}
+	}
+	return max
+}
+
 func main() {
-	heights := []int{0, 2, 0}
-	fmt.Println(largestRectangleArea(heights))
+	heights := []int{2, 1, 6, 5, 2, 4}
+	fmt.Println(largestRectangleAreaStack(heights))
 }

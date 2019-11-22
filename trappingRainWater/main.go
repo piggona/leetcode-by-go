@@ -33,7 +33,34 @@ func reverse(nums []int) {
 	}
 }
 
+func trapStack(height []int) int {
+	stack := []int{}
+	result := 0
+	i := 0
+	for i < len(height) {
+		if len(stack) == 0 || height[i] <= height[stack[len(stack)-1]] {
+			stack = append(stack, i)
+			i++
+		} else {
+			temp := stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+			if len(stack) == 0 {
+				continue
+			}
+			left := stack[len(stack)-1]
+			high := 0
+			if height[i] > height[left] {
+				high = height[left]
+			} else {
+				high = height[i]
+			}
+			result += (high - height[temp]) * (i - left - 1)
+		}
+	}
+	return result
+}
+
 func main() {
-	height := []int{4, 2, 3}
-	fmt.Println(trap(height))
+	height := []int{0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1}
+	fmt.Println(trapStack(height))
 }
