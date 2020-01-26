@@ -5,6 +5,27 @@ import (
 	"math"
 )
 
+func maxSubArrayOn(nums []int) int {
+	res := nums[0]
+	curSum := 0
+	for i := 0; i < len(nums); i++ {
+		temp := nums[i]
+		curSum = getMax(temp, curSum+temp)
+		res = getMax(curSum, res)
+	}
+	return res
+}
+
+func getMax(max ...int) int {
+	res := math.MinInt32
+	for _, value := range max {
+		if value > res {
+			res = value
+		}
+	}
+	return res
+}
+
 func maxSubArray(nums []int) int {
 	max := 0
 	tm := 0

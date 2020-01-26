@@ -16,6 +16,18 @@ func grayCode(n int) []int {
 	return nil
 }
 
+func binaryToGray(n int) int {
+	return (n >> 1) ^ n
+}
+
+func grayToBinary(num int) int {
+	var mask int
+	for mask = num >> 1; mask != 0; mask = mask >> 1 {
+		num = num ^ mask
+	}
+	return num
+}
+
 func getCode(n, size int, numMap map[int]bool, result []int) (bool, []int) {
 	if size == 0 {
 		return true, result
